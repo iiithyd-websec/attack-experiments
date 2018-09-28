@@ -1,0 +1,99 @@
+#+title: Attacker Server
+
+* Imports
+#+NAME: imports
+#+BEGIN_SRC javascript
+var express = require('express');
+var server = express();
+server.set('view engine', 'ejs');
+//Optional, since expressjs looks into 'views' by default.
+server.set('views', __dirname + '/views'); 
+
+// middleware
+server.use(express.favicon(__dirname + '/public/img/favicon.ico'));
+server.use(express.static(__dirname+'/public'));
+#+END_SRC
+
+* Hosting
+#+NAME: serverlink
+#+BEGIN_SRC javascript
+server.configure('production', function () {
+    server.disable('view cache');
+});
+server.configure('development', function () {
+    server.disable('view cache');
+});
+#+END_SRC
+
+* NavBar Redirections
+** On page load
+#+NAME: loadhome
+#+BEGIN_SRC javascript
+server.get('/', function(req, res){
+  res.redirect('home');
+});
+#+END_SRC
+
+** Home
+#+NAME: home
+#+BEGIN_SRC javascript
+server.get('/home', function(req, res){
+  res.render('home');
+});
+#+END_SRC
+
+** CSRF
+#+NAME: csrf
+#+BEGIN_SRC javascript
+server.get('/csrf',  function (req, res) {
+    res.render('csrf');
+});
+#+END_SRC
+
+** clickjacking
+#+NAME: clickjacking
+#+BEGIN_SRC javascript
+server.get('/clickjacking',  function (req, res) {
+    res.render('clickjacking');
+});
+#+END_SRC
+
+** timing
+#+NAME: timing
+#+BEGIN_SRC javascript
+server.get('/timing',  function (req, res) {
+    res.render('timing');
+});
+#+END_SRC
+
+* Error
+#+NAME: error
+#+BEGIN_SRC javascript
+server.use(function(req, res, next){
+  res.status(404);
+  res.render('404', {url:req.url});
+});
+#+END_SRC
+
+* Host Port
+#+NAME: hostport
+#+BEGIN_SRC javascript
+var port = process.env.PORT || 3200;
+server.listen(port, function() {
+  console.log("Listening on " + port);
+});
+#+END_SRC
+
+* Tangle
+#+NAME: functions
+#+BEGIN_SRC javascript :tangle Server.js :eval no :noweb yes
+<<imports>>
+<<serverlink>>
+<<loadhome>>
+<<home>>
+<<csrf>>
+<<clickjacking>>
+<<timing>>
+<<error>>
+<<hostport>>
+#+END_SRC

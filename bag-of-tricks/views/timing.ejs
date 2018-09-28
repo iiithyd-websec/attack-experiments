@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bag-Of-Tricks . Timing</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+  </head>
+  <body>
+   <% include navbar %>
+    <div class="container">
+        <h2>Cross site timing</h2>
+		<p>I know your login status at Can-Of-Worms!</p>
+		<div id="spLoginStatus"></div>
+		<h5>Below are some of the cross site timing vectors.</h5>
+		<table class="table">
+			<tr>
+				<td><* script src=”http://can-of-worms/transfer” onload=”loggedIn()” onerror=”NotLoggedIn()” /></td>
+			</tr>
+			<tr>
+				<td><* img src=”http://can-of-worms/profilePic.jpg” onload=”loggedIn()” onerror=”NotLoggedIn()” /></td>
+			</tr>
+			</table>      
+    </div> <!-- /container -->
+	<script src="../js/login-detection.js"></script>
+  </body>
+</html>

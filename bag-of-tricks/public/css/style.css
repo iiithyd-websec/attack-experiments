@@ -1,0 +1,49 @@
+ body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+    background-color: #f5f5f5;
+  }
+
+  div.container{
+    width: 800px;
+    /*text-align: center;*/
+  }
+  
+  #targetContainers{
+	opacity: 0;
+  }
+  
+  div.divTable{
+	width: 900px;
+  }
+  
+  div .table{
+	width: 500px;
+  }
+  
+  .clickJackDiv{
+	    width: 123px;
+		height: 30px;
+		overflow:hidden;	
+		border: solid 1px #cdcdcd;
+		position: absolute;
+		left: 370px;
+		top: 150px;
+		z-index: 1000;
+		opacity: 0.1;
+  }
+  
+  .clickJackFrame{
+	width: 600px;
+	height: 400px;
+    border: 0px;
+    overflow: hidden;
+    cursor: pointer;
+	position: relative;
+    top: -342px;
+    left: -183px;
+}
+
+#spLoginStatus{
+	width: 350px;
+}

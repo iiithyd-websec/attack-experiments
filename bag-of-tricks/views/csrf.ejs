@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bag-Of-Tricks . CSRF</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+  </head>
+  <body>
+   <% include navbar %> 
+    <div class="container">
+        <h2>CSRF vectors</h2>
+        To test the below vectors, Login at "Can-Of-Worms", come back to this page and click on each of the links. 
+		The GET vectors change the password of the logged-in user to a random number, whereas the POST requests deduct random amounts from the logged-in user's account.
+        <div class="container">
+		<div class="divTable">
+			<h5>HTTP GET - Content inclusion </h5>
+			<p>The below vectors trigger cross origin HTTP GET requests automatically, as soon as they become a part of a page's DOM tree (user intervention is not required).
+			In this demo, we inject each of these vectors into this page's DOM when their corresponding links are clicked.</p>
+			<table id="tblGetAutoVectors" class="table">
+				<tr>
+					<td> <a href="#" vector='script'>Script</a> </td>
+					<td> <a href="#" vector='link'>CSS</a> </td>
+					<td> <a href="#" vector='corsGet'>HTML5-CORS-GET</a> </td>
+				</tr>
+				<tr>
+					<td> <a href="#" vector='img'>Img</a> </td>
+					<td> <a href="#" vector='iframe'>Iframe</a> </td>
+				</tr>
+				</table>
+		</div>
+		
+		<div class="divTable">	
+			<h5>HTTP GET - Navigation/submission </h5>
+			<p>The below vectors trigger cross origin HTTP GET requests when they receive an "onclick" event - either manually or programatically. 
+			In this demo, we inject each of them into the DOM and programatically click them using JavaScript.</p>
+			<table id="tblGetEventVectors" class="table">
+				<tr>
+					<td> <a href="#" vector="anchor">A - href</a> </td>
+					<td> <a href="#" vector="formGet">Form-GET</a> </td>
+					<td> <a href="#" vector='popup'>Popup</a> </td>
+					<td> <a href="#" vector='windowNav'>Navigate - window.location.href</a> </td>
+				</tr>
+			</table>      
+		</div>
+    </div>
+	
+	<div class="divTable">	
+			<h5>HTTP POST</h5>
+			Forms submissions and HTML5 CORS can be used to trigger cross origin POST automatically.
+			Note that by default CORS requests do not include cookies in cross origin requests.
+			They can be included by explicitly setting the flag: "<b>xhr.withCredentials = true</b>"
+			<table id="tblPostVectors" class="table">
+				<tr>
+					<td> <a href="#" vector="formPost">Form-POST</a> </td>
+					<td> <a href="#" vector="corsPost">HTML5-CORS-POST</a> </td>
+					<td></td>
+				</tr>
+			</table>      
+		</div>
+    </div>
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/csrf.js"></script>
+	<script src="../js/cors-csrf.js"></script>
+
+	<div id="targetContainers">
+		<div id="targetDiv"></div>
+		<iframe id="targetFrame" name="tgtFrame" class="target"></iframe> 
+	</div>
+    </body>
+</html>

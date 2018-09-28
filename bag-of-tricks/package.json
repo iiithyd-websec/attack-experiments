@@ -1,0 +1,10 @@
+{
+    "name": "Bag-Of-Tricks",
+    "description": "Watch out for Mallory's cross-origin tricks of trade",
+    "version": "0.0.1",
+    "author": "Krishna Chaitanya T <https.kris@gmail.com>",
+    "dependencies": {
+        "express": "3.x",
+        "ejs": "0.8.4"
+    }
+}

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bag-Of-Tricks . Clickjacking</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+  </head>
+  <body>
+   <% include navbar %>
+    <div class="container">
+        <h2>Clickjacking</h2>
+        <h5>Framing using CSS </h5>
+		<div class="clickJackDiv">
+		<!--  --><iframe src="http://localhost:3100/settings" class="clickJackFrame" scrolling="no"></iframe> 
+		<!-- <iframe src="http://hidden-brushlands-4145.herokuapp.com/settings" class="clickJackFrame" scrolling="no"></iframe>  --> 
+		</div>
+		<a class="btn btn-primary" href="#">Play this game!</a>		
+    </div>
+  </body>
+</html>
