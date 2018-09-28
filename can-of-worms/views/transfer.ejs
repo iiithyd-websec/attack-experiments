@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Can-Of-Worms . Funds</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/forms.css">
+  </head>
+  <body>
+   <% include navbar %>
+    <div class="container">
+        <h2>Transfer funds with ease!</h2>
+        <div class="row">
+            <form method="post" action="/transfer" class="form-signin" autocomplete="off">
+                <select name="transferTo" autofocus="true">
+                    <option value="select">Select a user</option>
+                    <% for(var user in usersList){ %>
+                        <% if(usersList.hasOwnProperty(user)){ %>
+                            <% if(loggedInUser.trim() != usersList[user].fullname.trim()) { %>
+                                <option value="<%= usersList[user].username%>"><%= usersList[user].fullname %></option>
+                        <% } 
+                    } %>
+                    <%}%>
+                </select>
+            
+                <input type="text" name="amount" class="input-block-level" placeholder="Amount">
+                <input class="btn btn-large btn-primary" value="Transfer" type="submit">
+            </form>
+        </div>
+        <div class="row">
+            <h4>Your current balance is: $<%= balance%> </h4>
+        </div>
+        <div class="row"><%-msg %></div>
+    </div>
+  </body>
+</html>

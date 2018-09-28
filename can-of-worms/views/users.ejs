@@ -1,0 +1,14 @@
+<!Doctype HTML>
+<html>
+    <head>
+        <title>Test app</title>
+    </head>
+    <body>
+        <p>List of users in the system:</p>
+        <ul>
+            <% users.forEach(function(user){ %>
+                <li><%= user.name %> </li>
+            <%}) %>
+        </ul>
+    </body>
+</html>

@@ -1,0 +1,58 @@
+<% var title = 'Can-Of-Worms . Login' %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/forms.css">
+  </head>
+  <body>
+    <div class="container">
+        <h2>Welcome to Can-Of-Worms</h2>
+        <p>Your most (in)secure banking partner!</p>
+        <div class="row">
+            <form method="post" action="/home" class="form-signin" autocomplete="off">
+                <input type="text" name="username" class="input-block-level" placeholder="Username" autofocus="true">
+                <input type="password" name="password" class="input-block-level" placeholder="Password">
+                <input class="btn btn-primary" value="Sign In" type="submit">
+            </form>
+        </div>
+        <div class="row"> <a id="anShowUsers" href="#">Login details</a> </div>
+        <div class="row"> <%- msg %> </div>
+        <div id="popupContent" class="hidden">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Password</th>
+                </tr>
+              </thead>
+              <tbody>
+                    <% for(var user in usersDB){ %>
+                        <% if(usersDB.hasOwnProperty(user)){ %>
+                            <% if(usersDB[user].active === true) { %>
+                                <tr> <td> <%= usersDB[user].username %> </td>
+                                     <td> <%= usersDB[user].pwd %> </td>
+                                </tr>
+                         <% } %> 
+                        <% } %>
+                    <%}%>
+              </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#anShowUsers').popover({
+                title: 'Credentials of users in the system', 
+                placement: 'bottom',
+                html: true,
+                content: $('#popupContent').html(),
+                trigger: 'hover'
+            });
+        });
+    </script>
+  </body>
+</html>

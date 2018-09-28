@@ -1,0 +1,10 @@
+{
+    "name": "hello-express",
+    "description": "My first NodeJs app",
+    "version": "0.0.1",
+    "author": "Krishna Chaitanya T <https.kris@gmail.com>",
+    "dependencies": {
+        "express": "3.x",
+        "ejs": "0.8.4"
+    }
+}

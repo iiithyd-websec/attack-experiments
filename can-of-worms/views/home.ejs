@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Can-Of-Worms . Home</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/home.css">
+  </head>
+  <body>
+   <% include navbar %>
+
+      <div class="container">
+
+      <div class="hero-unit">
+        <h1>Hello, <%- loggedInUser %>!</h1>
+        <p>Welcome to Can-of-Worms!</i> This is the most (in)secure social banking platform ever!</p>
+      </div>
+
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="span4">
+          <h2>Transfer funds</h2>
+          <p> Funds transfer has never been this easy! It is just a click away.</p>
+          <p><a class="btn btn-primary" href="/transfer">Transfer &raquo;</a></p>
+        </div>
+        <div class="span4">
+          <h2>Manage your data</h2>
+          <p>Your private data is stored on our highly secure servers. It is leak proof!</p>
+          <p><a class="btn btn-primary" href="/settings">Manage &raquo;</a></p>
+       </div>
+        <div class="span4">
+          <h2>Get social</h2>
+          <p>Check out our social partner and have fun while banking.</p>
+          <p><a class="btn" href="http://floating-badlands-9915.herokuapp.com/" target="_blank">View details &raquo;</a></p>
+        </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <div class="row"> 
+            <div class="span6"> &copy; Can-Of-Worms 2013</div> 
+            <div class="span6 website">Developed by: <a href="http://novogeek.com" target="_blank">Krishna Chaitanya T</a></div>
+        </div>
+      </footer>
+
+    </div> <!-- /container -->
+  </body>
+</html>

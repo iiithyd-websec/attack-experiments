@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Can-Of-Worms . Profile</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+            background-color: #f5f5f5;
+        }
+    </style>
+  </head>
+  <body>
+   <% include navbar %> 
+    <div class="container">
+        <h2>Manage your data</h2>
+        <p>This is your private page. You can have complete control on your data.</p>
+        
+        <% if(loggedInUser.trim() === 'Awesome Admin') { %>
+            <fieldset>
+                <legend>Reset user data</legend>
+                <a href="/resetBalance" class="btn btn-success">Reset Balance</a>
+                <a href="/activateAccount" class="btn btn-success">Activate accounts</a>
+            </fieldset>
+        <% } %>
+        
+           </br>
+        <form class="form-inline" method="GET" action="/changePassword" autocomplete="off">
+          <fieldset>
+            <legend>Change password</legend>
+          <input type="text" name="new" class="input-medium" placeholder="Enter new password" autofocus="true">
+          <button type="submit" class="btn">Submit</button>
+          </fieldset>
+        </form>
+
+        <% if(loggedInUser.trim() !== 'Awesome Admin') { %>
+            <form class="form-inline" method="GET" action="/deactivateAccount" autocomplete="off">
+              <fieldset>
+                <legend>Deactivate my account</legend>
+                <label>Are you sure of your action? </label>
+                <button type="submit" class="btn btn-danger">Yes, deactivate</button>
+              </fieldset>
+            </form>
+        <% } %>
+    </div
+  </body>
+</html>
